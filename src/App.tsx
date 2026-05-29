@@ -1,284 +1,550 @@
-import { useMemo } from 'react'
+import { useEffect, useMemo, useState } from 'react'
+import {
+  ArrowUpRight,
+  Code2,
+  FileText,
+  GitBranch,
+  Mail,
+  MapPin,
+  Network,
+  PenTool,
+  Wrench,
+} from 'lucide-react'
 import './styles.css'
-
 
 type Project = {
   name: string
+  kicker: string
   description: string
+  stack: string[]
+  href?: string
   featured?: boolean
-  tags: string[]
 }
 
-const projects: Project[] = [
+type SkillGroup = {
+  title: string
+  description: string
+  icon: React.ComponentType<{ className?: string }>
+}
+
+type NavItem = {
+  href: string
+  label: string
+  activeClass: string
+  idleClass: string
+  dotClass: string
+}
+
+const navItems: NavItem[] = [
   {
-    name: 'MRF Application',
-    featured: true,
-    description:
-      "A Material Recovery Facility application that streamlines the tracking and management of recyclable materials through a facility's workflow.",
-    tags: ['React', 'Firebase', 'Firestore', 'Firebase Auth', 'Real-time DB'],
+    href: '#work',
+    label: 'Work',
+    activeClass: 'border-emerald-700 bg-emerald-700 text-white shadow-emerald-900/15',
+    idleClass: 'border-emerald-200 bg-emerald-50 text-emerald-900 hover:border-emerald-400 hover:bg-emerald-100',
+    dotClass: 'bg-emerald-500',
+  },
+  {
+    href: '#about',
+    label: 'About',
+    activeClass: 'border-cyan-700 bg-cyan-700 text-white shadow-cyan-900/15',
+    idleClass: 'border-cyan-200 bg-cyan-50 text-cyan-900 hover:border-cyan-400 hover:bg-cyan-100',
+    dotClass: 'bg-cyan-500',
+  },
+  {
+    href: '#skills',
+    label: 'Skills',
+    activeClass: 'border-amber-600 bg-amber-500 text-zinc-950 shadow-amber-900/15',
+    idleClass: 'border-amber-200 bg-amber-50 text-amber-900 hover:border-amber-400 hover:bg-amber-100',
+    dotClass: 'bg-amber-500',
+  },
+  {
+    href: '#contact',
+    label: 'Contact',
+    activeClass: 'border-violet-700 bg-violet-700 text-white shadow-violet-900/15',
+    idleClass: 'border-violet-200 bg-violet-50 text-violet-900 hover:border-violet-400 hover:bg-violet-100',
+    dotClass: 'bg-violet-500',
   },
 ]
 
-const skills = ['React', 'Firebase', 'JavaScript', 'HTML/CSS', 'Firestore', 'Git', 'Responsive', 'REST APIs']
+const projects: Project[] = [
+  {
+    name: 'Mwawa Gas Suppliers',
+    kicker: 'Business operations web app',
+    featured: true,
+    description:
+      'A supplier-focused gas management project built to support product visibility, customer access, and smoother day-to-day operations. The work sharpened my ability to design practical interfaces around real business needs.',
+    stack: ['React', 'JavaScript', 'Responsive UI', 'GitHub'],
+    href: 'https://github.com/simonwamugunda/mwawa-gas',
+  },
+  {
+    name: 'DeKUT Student Medical Centre',
+    kicker: 'Attachment project',
+    description:
+      'A student medical centre system I contributed to during my attachment at Dedan Kimathi University of Technology. It helped me grow in structured problem solving, documentation, support workflows, and building software for real users.',
+    stack: ['Web Development', 'Systems Support', 'Documentation', 'User Workflows'],
+  },
+  {
+    name: 'MRF Application',
+    kicker: 'Recycling workflow platform',
+    description:
+      "A Material Recovery Facility application for tracking recyclable materials through a facility's workflow. I focused on clean data flow, reliable Firebase integration, and an interface teams can understand quickly.",
+    stack: ['React', 'Firebase', 'Firestore', 'Firebase Auth'],
+  },
+]
+
+const skillGroups: SkillGroup[] = [
+  {
+    title: 'Frontend Development',
+    description: 'React, JavaScript, HTML, CSS, responsive interfaces, and accessible UI patterns.',
+    icon: Code2,
+  },
+  {
+    title: 'Backend and Tools',
+    description: 'Firebase, Firestore, REST APIs, Git, deployment workflows, and practical debugging.',
+    icon: Wrench,
+  },
+  {
+    title: 'Copywriting',
+    description: 'Clear product copy, portfolio storytelling, and user-focused communication.',
+    icon: PenTool,
+  },
+  {
+    title: 'IT Support',
+    description: 'Network troubleshooting, hardware troubleshooting, software setup, and support.',
+    icon: Network,
+  },
+]
+
+const tools = [
+  'React',
+  'Firebase',
+  'Firestore',
+  'JavaScript',
+  'HTML',
+  'CSS',
+  'Git',
+  'REST APIs',
+  'Copywriting',
+  'Network Support',
+  'Hardware Support',
+  'Software Support',
+]
 
 export default function App() {
   const year = useMemo(() => new Date().getFullYear(), [])
+  const [activeSection, setActiveSection] = useState('work')
+
+  useEffect(() => {
+    const updateFromHash = () => {
+      const section = window.location.hash.replace('#', '')
+
+      if (section) {
+        setActiveSection(section)
+      }
+    }
+
+    updateFromHash()
+    window.addEventListener('hashchange', updateFromHash)
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visibleEntry = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0]
+
+        if (visibleEntry?.target.id) {
+          setActiveSection(visibleEntry.target.id)
+        }
+      },
+      { rootMargin: '-35% 0px -50% 0px', threshold: [0.12, 0.3, 0.6] },
+    )
+
+    navItems.forEach((item) => {
+      const section = document.querySelector(item.href)
+
+      if (section) {
+        observer.observe(section)
+      }
+    })
+
+    return () => {
+      window.removeEventListener('hashchange', updateFromHash)
+      observer.disconnect()
+    }
+  }, [])
 
   return (
-    <div className="min-h-screen bg-zinc-950 text-zinc-100">
-      {/* Background accent */}
-      <div className="pointer-events-none fixed inset-0 -z-10">
-        <div className="absolute -top-24 left-1/2 h-72 w-[38rem] -translate-x-1/2 rounded-full bg-fuchsia-500/10 blur-3xl" />
-        <div className="absolute top-64 -left-24 h-72 w-72 rounded-full bg-cyan-400/10 blur-3xl" />
-      </div>
+    <div className="min-h-screen bg-[#f8faf9] text-zinc-950 antialiased">
+      <header className="sticky top-0 z-30 border-b border-zinc-200/80 bg-[#f8faf9]/95 backdrop-blur">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
+          <a href="#top" className="flex items-center gap-3">
+            <span className="grid h-10 w-10 place-items-center rounded-md bg-zinc-950 text-sm font-bold text-white">
+              SW
+            </span>
+            <span className="leading-tight">
+              <span className="block text-sm font-semibold">Simon Wamugunda</span>
+              <span className="block text-xs text-zinc-600">Developer and IT Support</span>
+            </span>
+          </a>
 
-      <header className="sticky top-0 z-20 border-b border-white/5 bg-zinc-950/70 backdrop-blur">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4">
-          <div className="flex items-center gap-3">
-            <div className="relative h-10 w-10 overflow-hidden rounded-full border border-white/10 bg-white/5">
-              <img
-                alt="Simon Wamugunda Waweru"
-                src="/portfolio.jpeg"
-                className="h-full w-full object-cover"
-              />
-            </div>
-            <div className="leading-tight">
-              <div className="text-sm font-semibold">Simon Wamugunda Waweru</div>
-              <div className="text-xs text-zinc-400">Available for hire</div>
-            </div>
-          </div>
+          <nav className="hidden items-center gap-2 text-sm font-medium md:flex" aria-label="Primary navigation">
+            {navItems.map((item) => {
+              const isActive = activeSection === item.href.slice(1)
 
-          <nav className="hidden gap-6 text-sm text-zinc-300 md:flex">
-            <a href="#about" className="hover:text-white">About</a>
-            <a href="#projects" className="hover:text-white">Projects</a>
-            <a href="#skills" className="hover:text-white">Skills</a>
-            <a href="#contact" className="hover:text-white">Contact</a>
+              return (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  onClick={() => setActiveSection(item.href.slice(1))}
+                  className={
+                    'inline-flex items-center gap-2 rounded-full border px-4 py-2 shadow-sm transition ' +
+                    (isActive ? item.activeClass : item.idleClass)
+                  }
+                  aria-current={isActive ? 'page' : undefined}
+                >
+                  <span className={'h-2 w-2 rounded-full ' + (isActive ? 'bg-white/85' : item.dotClass)} />
+                  {item.label}
+                </a>
+              )
+            })}
           </nav>
 
-          <div className="flex items-center gap-3">
-            <a
-              className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-white/5 hover:bg-white/10"
-              href="https://github.com/simonwamugunda"
-              target="_blank"
-              rel="noreferrer"
-              aria-label="GitHub"
-            >
-              <span aria-hidden className="text-sm font-bold">GH</span>
-            </a>
-            <a
-              className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-white/5 hover:bg-white/10"
-              href="https://linkedin.com/in/simonwamugunda"
-              target="_blank"
-              rel="noreferrer"
-              aria-label="LinkedIn"
-            >
-              <span aria-hidden className="text-sm font-bold">in</span>
-            </a>
-
-          </div>
+          <a
+            href="mailto:simonwamugunda25@gmail.com"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-zinc-200 bg-white text-zinc-950 shadow-sm transition hover:border-emerald-700 hover:text-emerald-800"
+            aria-label="Email Simon"
+          >
+            <Mail className="h-4 w-4" />
+          </a>
         </div>
+        <nav className="scrollbar-hide mx-auto flex max-w-7xl gap-2 overflow-x-auto px-4 pb-4 text-sm font-medium sm:px-6 md:hidden" aria-label="Mobile navigation">
+          {navItems.map((item) => {
+            const isActive = activeSection === item.href.slice(1)
+
+            return (
+              <a
+                key={item.href}
+                href={item.href}
+                onClick={() => setActiveSection(item.href.slice(1))}
+                className={
+                  'inline-flex shrink-0 items-center gap-2 rounded-full border px-4 py-2 shadow-sm transition ' +
+                  (isActive ? item.activeClass : item.idleClass)
+                }
+                aria-current={isActive ? 'page' : undefined}
+              >
+                <span className={'h-2 w-2 rounded-full ' + (isActive ? 'bg-white/85' : item.dotClass)} />
+                {item.label}
+              </a>
+            )
+          })}
+        </nav>
       </header>
 
-      <main>
-        {/* Hero */}
-        <section className="mx-auto max-w-6xl px-4 pb-10 pt-10">
-          <div className="grid items-start gap-10 md:grid-cols-2">
-            <div>
-              <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-zinc-300">
-                <span className="h-2 w-2 rounded-full bg-emerald-400" />
-                <span>Available for hire</span>
-              </div>
-
-              <h1 className="mt-4 text-4xl font-semibold leading-tight tracking-tight md:text-5xl">
-                I build web applications that are fast, functional, and built to last — from frontend interfaces to full-stack systems.
-              </h1>
-
-              <div className="mt-6 flex flex-wrap gap-6 text-sm">
-                <div>
-                  <div className="text-2xl font-semibold">2+</div>
-                  <div className="text-zinc-400">Years coding</div>
-                </div>
-                <div>
-                  <div className="text-2xl font-semibold">5+</div>
-                  <div className="text-zinc-400">Projects built</div>
-                </div>
-                <div>
-                  <div className="text-2xl font-semibold">3</div>
-                  <div className="text-zinc-400">Tech stacks</div>
-                </div>
-              </div>
-
-              <p className="mt-6 max-w-prose text-zinc-300">
-                Fast, clean UI. Solid architecture. Reliable integrations.
+      <main id="top">
+        <section className="mx-auto grid max-w-7xl items-center gap-10 px-4 py-14 sm:px-6 lg:min-h-[calc(100vh-121px)] lg:grid-cols-[1.08fr_0.92fr] lg:px-8">
+          <div>
+            <div className="flex flex-wrap items-center gap-3">
+              <p className="w-fit rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-emerald-800">
+                Nairobi based developer
               </p>
-
-              <div className="mt-8 flex flex-wrap items-center gap-3">
-                <a
-                  href="#projects"
-                  className="inline-flex items-center justify-center rounded-xl bg-white px-5 py-3 text-sm font-medium text-zinc-950 hover:bg-white/90"
-                >
-                  View projects
-                </a>
-
-                <a
-                  href="#contact"
-                  className="inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/5 px-5 py-3 text-sm font-medium text-zinc-200 hover:bg-white/10"
-                >
-                  Get in touch
-                </a>
-              </div>
+              <p className="w-fit rounded-full border border-zinc-200 bg-white px-3 py-1 text-xs font-semibold text-zinc-600">
+                Open to junior developer and IT support roles
+              </p>
             </div>
 
-            <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
-              <div className="text-sm text-zinc-400">Quick profile</div>
-              <div className="mt-3 flex items-center justify-between">
-                <div>
-                  <div className="text-lg font-semibold">Simon</div>
-                  <div className="text-zinc-400">Nairobi, Kenya</div>
-                </div>
-                <div className="text-xs rounded-full border border-white/10 bg-white/5 px-3 py-1 text-zinc-300">Web Developer</div>
-              </div>
+            <h1 className="mt-6 max-w-4xl text-4xl font-bold leading-[1.05] tracking-tight text-zinc-950 sm:text-5xl lg:text-6xl">
+              I build fast, useful web experiences and keep the systems behind them running.
+            </h1>
 
-              <div className="mt-5 grid gap-3">
-                <div className="rounded-xl border border-white/10 bg-black/20 p-4">
-                  <div className="text-xs text-zinc-400">Specialty</div>
-                  <div className="mt-1 font-medium">React + Firebase apps</div>
-                </div>
-                <div className="rounded-xl border border-white/10 bg-black/20 p-4">
-                  <div className="text-xs text-zinc-400">Focus</div>
-                  <div className="mt-1 font-medium">Performance • UX • Maintainability</div>
-                </div>
-              </div>
+            <p className="mt-6 max-w-2xl text-base leading-8 text-zinc-700 sm:text-lg">
+              I am a front-end focused developer with hands-on skill in Firebase apps, copywriting,
+              network troubleshooting, hardware support, and software support.
+            </p>
+
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <a
+                href="#work"
+                className="inline-flex items-center justify-center gap-2 rounded-md bg-emerald-800 px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-emerald-900"
+              >
+                View Projects
+                <ArrowUpRight className="h-4 w-4" />
+              </a>
+              <a
+                href="#contact"
+                className="inline-flex items-center justify-center gap-2 rounded-md border border-zinc-200 bg-white px-5 py-3 text-sm font-semibold text-zinc-950 shadow-sm transition hover:border-zinc-400"
+              >
+                Let&apos;s Work Together
+              </a>
+            </div>
+
+            <div className="mt-8 grid gap-3 border-y border-zinc-200 py-5 sm:grid-cols-3">
+              <ProofPoint label="Primary stack" value="React + Firebase" />
+              <ProofPoint label="Strength" value="Business-ready UI" />
+              <ProofPoint label="Support edge" value="Networks, hardware, software" />
             </div>
           </div>
+
+          <aside className="relative">
+            <div className="rounded-2xl border border-zinc-200 bg-white p-3 shadow-xl shadow-zinc-200/80">
+              <div className="mb-3 flex items-center justify-between px-1">
+                <span className="text-xs font-semibold uppercase tracking-[0.18em] text-zinc-500">Profile</span>
+                <span className="rounded-full bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-800">Available</span>
+              </div>
+              <div className="aspect-[4/5] overflow-hidden rounded-xl border border-zinc-200 bg-zinc-200">
+              <img
+                src="/portfolio.jpeg"
+                alt="Simon Wamugunda Waweru"
+                className="h-full w-full object-cover"
+              />
+              </div>
+            </div>
+            <div className="mt-8 grid grid-cols-3 gap-3 text-center">
+              <Stat value="3+" label="Core projects" />
+              <Stat value="4" label="Skill lanes" />
+              <Stat value="2026" label="Updated" />
+            </div>
+          </aside>
         </section>
 
-        {/* About */}
-        <Section id="about" title="About">
-          <div className="grid gap-8 md:grid-cols-[1.2fr_0.8fr] md:items-start">
-            <div className="text-zinc-300">
-              <p className="leading-relaxed">
-                I'm Simon, a web developer based in Nairobi, Kenya. I specialize in building modern web applications using React and Firebase,
-                turning ideas into clean, user-focused digital experiences. I'm passionate about writing solid code and learning new tools that
-                help me build better products.
+        <Section id="work" eyebrow="Selected work" title="Practical projects with business value">
+          <div className="grid gap-4 lg:grid-cols-3">
+            {projects.map((project, index) => (
+              <ProjectCard key={project.name} project={project} index={index} />
+            ))}
+          </div>
+        </Section>
+
+        <Section id="about" eyebrow="About" title="A practical builder with a support mindset">
+          <div className="grid gap-8 lg:grid-cols-[1fr_0.75fr]">
+            <div className="max-w-3xl text-base leading-8 text-zinc-700 sm:text-lg">
+              <p>
+                I am Simon Wamugunda Waweru, a web developer who enjoys turning everyday problems
+                into clean digital tools. My work combines front-end development with a grounded IT
+                support background, so I care about how software looks, how it behaves, and how people
+                recover when something breaks.
+              </p>
+              <p className="mt-5">
+                Beyond development, I bring copywriting, network troubleshooting, hardware
+                troubleshooting, and software support skills. That mix helps me communicate clearly,
+                diagnose issues faster, and build portfolio work that feels useful instead of decorative.
               </p>
             </div>
-            <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
-              <div className="text-xs text-zinc-400">Tech stacks</div>
-              <div className="mt-3 flex flex-wrap gap-2">
-                {['React', 'Firebase', 'JavaScript'].map((t) => (
-                  <span key={t} className="rounded-full border border-white/10 bg-black/20 px-3 py-1 text-xs text-zinc-200">
-                    {t}
-                  </span>
-                ))}
-              </div>
+
+            <div className="rounded-xl border border-zinc-200 border-l-4 border-l-cyan-700 bg-white p-6 shadow-sm">
+              <FileText className="h-6 w-6 text-cyan-700" />
+              <h3 className="mt-5 text-xl font-bold">Attachment Growth</h3>
+              <p className="mt-3 leading-7 text-zinc-700">
+                The DeKUT Student Medical Centre project gave me real workplace exposure and helped
+                me strengthen technical support, user communication, and disciplined project delivery.
+              </p>
             </div>
           </div>
         </Section>
 
-        {/* Projects */}
-        <Section id="projects" title="Projects">
-          <div className="flex flex-col gap-5">
-            {projects.map((p) => (
-              <article
-                key={p.name}
-                className={
-                  'rounded-2xl border ' +
-                  (p.featured ? 'border-fuchsia-500/30 bg-fuchsia-500/10' : 'border-white/10 bg-white/5') +
-                  ' p-6'
-                }
-              >
-                <div className="flex flex-col gap-2 md:flex-row md:items-start md:justify-between">
-                  <div>
-                    <div className="flex items-center gap-2">
-                      <h3 className="text-xl font-semibold">{p.name}</h3>
-                      {p.featured ? (
-                        <span className="rounded-full border border-fuchsia-400/30 bg-fuchsia-500/15 px-3 py-1 text-xs text-fuchsia-200">
-                          Featured
-                        </span>
-                      ) : null}
-                    </div>
-                    <p className="mt-2 text-zinc-300 leading-relaxed">{p.description}</p>
+        <Section id="skills" eyebrow="Capabilities" title="Development, communication, and support">
+          <div className="grid gap-4 md:grid-cols-2">
+            {skillGroups.map((skill) => {
+              const Icon = skill.icon
+
+              return (
+                <article key={skill.title} className="rounded-xl border border-zinc-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:border-emerald-200 hover:shadow-md">
+                  <div className="grid h-11 w-11 place-items-center rounded-lg bg-emerald-50 text-emerald-800">
+                    <Icon className="h-5 w-5" />
                   </div>
-                </div>
-
-                <div className="mt-4 flex flex-wrap gap-2">
-                  {p.tags.map((tag) => (
-                    <span key={tag} className="rounded-full border border-white/10 bg-black/20 px-3 py-1 text-xs text-zinc-200">
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              </article>
-            ))}
+                  <h3 className="mt-5 text-lg font-bold">{skill.title}</h3>
+                  <p className="mt-3 leading-7 text-zinc-700">{skill.description}</p>
+                </article>
+              )
+            })}
           </div>
 
-          <div className="mt-6 rounded-2xl border border-white/10 bg-white/5 p-5">
-            <div className="text-sm text-zinc-300">Have more work to show?</div>
-            <div className="mt-2 text-zinc-400 text-sm">Tell me the project name, what it does, and the tech used.</div>
-          </div>
-        </Section>
-
-        {/* Skills */}
-        <Section id="skills" title="Skills">
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-            {skills.map((s) => (
-              <div key={s} className="rounded-2xl border border-white/10 bg-white/5 p-4">
-                <div className="text-sm font-medium">{s}</div>
-              </div>
-            ))}
-          </div>
-        </Section>
-
-        {/* Contact */}
-        <Section id="contact" title="Contact">
-          <div className="grid gap-6 md:grid-cols-2">
-            <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
-              <div className="text-sm text-zinc-400">Email</div>
-              <a
-                href="mailto:simonwamugunda25@gmail.com"
-                className="mt-2 inline-flex items-center gap-2 text-lg font-semibold hover:text-white"
+          <div className="mt-8 flex flex-wrap gap-2">
+            {tools.map((tool) => (
+              <span
+                key={tool}
+                className="rounded-full border border-zinc-200 bg-white px-3 py-1 text-xs font-semibold uppercase tracking-wide text-zinc-700"
               >
-                <span aria-hidden className="text-base">✉️</span>
-                simonwamugunda25@gmail.com
-              </a>
-
-
-              <div className="mt-4 text-xs text-zinc-400">Location</div>
-              <div className="mt-1 text-sm">Nairobi, Kenya</div>
-            </div>
-
-            <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
-              <div className="text-sm text-zinc-400">Links</div>
-              <div className="mt-3 flex flex-col gap-3">
-                <a className="group inline-flex items-center justify-between rounded-xl border border-white/10 bg-black/20 px-4 py-3 text-sm hover:bg-white/10" href="https://github.com/simonwamugunda" target="_blank" rel="noreferrer">
-                  <span className="font-medium">github</span>
-                  <span className="text-zinc-400 group-hover:text-zinc-200">github.com/simonwamugunda</span>
-                </a>
-
-                <a className="group inline-flex items-center justify-between rounded-xl border border-white/10 bg-black/20 px-4 py-3 text-sm hover:bg-white/10" href="https://linkedin.com/in/simonwamugunda" target="_blank" rel="noreferrer">
-                  <span className="font-medium">linkedin</span>
-                  <span className="text-zinc-400 group-hover:text-zinc-200">linkedin.com/in/simonwamugunda</span>
-                </a>
-              </div>
-            </div>
+                {tool}
+              </span>
+            ))}
           </div>
-
-          <div className="mt-8 text-xs text-zinc-500">simon wamugunda waweru · nairobi, kenya · {year}</div>
         </Section>
       </main>
+
+      <footer id="contact" className="bg-zinc-950 text-white">
+        <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
+          <p className="text-sm font-semibold uppercase tracking-[0.22em] text-emerald-300">Contact</p>
+          <div className="mt-5 grid gap-8 lg:grid-cols-[1fr_0.8fr] lg:items-end">
+            <div>
+              <h2 className="text-3xl font-bold leading-tight sm:text-5xl">Let&apos;s work together.</h2>
+              <a
+                href="mailto:simonwamugunda25@gmail.com"
+                className="mt-5 inline-flex max-w-full items-center gap-3 break-all text-lg font-semibold text-white underline decoration-emerald-400 decoration-2 underline-offset-8 hover:text-emerald-300 sm:text-xl"
+              >
+                <Mail className="h-5 w-5 shrink-0" />
+                simonwamugunda25@gmail.com
+              </a>
+              <a
+                href="mailto:sw0757153838@gmail.com"
+                className="mt-3 inline-flex max-w-full items-center gap-3 break-all text-base font-semibold text-zinc-300 underline decoration-cyan-400 decoration-2 underline-offset-8 hover:text-white sm:text-lg"
+              >
+                <Mail className="h-5 w-5 shrink-0" />
+                sw0757153838@gmail.com
+              </a>
+            </div>
+
+            <div className="grid gap-3 text-sm">
+              <FooterLink href="https://github.com/simonwamugunda" label="GitHub" value="github.com/simonwamugunda" icon={GitBranch} />
+              <FooterLink href="https://linkedin.com/in/simonwamugunda" label="LinkedIn" value="linkedin.com/in/simonwamugunda" icon={Network} />
+              <div className="flex items-center gap-3 rounded-md border border-white/15 bg-white/5 px-4 py-3 text-zinc-300">
+                <MapPin className="h-4 w-4 text-emerald-300" />
+                Nairobi, Kenya
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-12 border-t border-white/10 pt-5 text-xs text-zinc-500">
+            Simon Wamugunda Waweru, {year}
+          </div>
+        </div>
+      </footer>
     </div>
   )
 }
 
-function Section({ id, title, children }: { id: string; title: string; children: React.ReactNode }) {
+function ProjectCard({ project, index }: { project: Project; index: number }) {
   return (
-    <section id={id} className="mx-auto max-w-6xl px-4 py-12 scroll-mt-24">
-      <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-semibold tracking-tight">{title}</h2>
+    <article
+      className={
+        'group flex min-h-[28rem] flex-col rounded-xl border p-5 transition hover:-translate-y-1 hover:shadow-lg ' +
+        (project.featured
+          ? 'border-emerald-900 bg-zinc-950 text-white shadow-lg shadow-zinc-300/40'
+          : 'border-zinc-200 bg-white text-zinc-950 shadow-sm')
+      }
+    >
+      <div
+        className={
+          'grid aspect-[16/10] place-items-center rounded-lg border text-4xl font-bold ' +
+          (project.featured
+            ? 'border-white/15 bg-emerald-100 text-emerald-950'
+            : index === 1
+              ? 'border-zinc-200 bg-cyan-700 text-white'
+              : 'border-zinc-950/10 bg-zinc-100 text-zinc-950')
+        }
+      >
+        {String(index + 1).padStart(2, '0')}
       </div>
-      <div className="mt-6">{children}</div>
+
+      <div className="mt-6 flex flex-1 flex-col">
+        <p className={project.featured ? 'text-xs font-semibold uppercase tracking-[0.18em] text-emerald-300' : 'text-xs font-semibold uppercase tracking-[0.18em] text-zinc-500'}>
+          {project.kicker}
+        </p>
+        <h3 className="mt-3 text-xl font-bold leading-tight">{project.name}</h3>
+        <p className={project.featured ? 'mt-4 leading-7 text-zinc-300' : 'mt-4 leading-7 text-zinc-700'}>
+          {project.description}
+        </p>
+
+        <div className="mt-5 flex flex-wrap gap-2">
+          {project.stack.map((item) => (
+            <span
+              key={item}
+              className={
+                'rounded-full border px-3 py-1 text-xs font-medium ' +
+                (project.featured ? 'border-white/15 bg-white/10 text-white' : 'border-zinc-950/10 bg-zinc-50 text-zinc-700')
+              }
+            >
+              {item}
+            </span>
+          ))}
+        </div>
+
+        {project.href ? (
+          <a
+            href={project.href}
+            target="_blank"
+            rel="noreferrer"
+            className={
+              'mt-auto inline-flex w-fit items-center gap-2 pt-7 text-sm font-semibold underline decoration-2 underline-offset-4 ' +
+              (project.featured ? 'text-white decoration-emerald-300' : 'text-zinc-950 decoration-cyan-600')
+            }
+          >
+            View Project
+            <ArrowUpRight className="h-4 w-4" />
+          </a>
+        ) : (
+          <span className={project.featured ? 'mt-auto pt-7 text-sm font-medium text-zinc-400' : 'mt-auto pt-7 text-sm font-medium text-zinc-500'}>
+            Case study available on request
+          </span>
+        )}
+      </div>
+    </article>
+  )
+}
+
+function Section({
+  id,
+  eyebrow,
+  title,
+  children,
+}: {
+  id: string
+  eyebrow: string
+  title: string
+  children: React.ReactNode
+}) {
+  return (
+    <section id={id} className="portfolio-section mx-auto max-w-7xl scroll-mt-32 rounded-2xl px-4 py-14 transition sm:px-6 lg:px-8 lg:py-18">
+      <div className="mb-8 max-w-3xl">
+        <div className="mb-4 h-1 w-12 rounded-full bg-emerald-700" />
+        <p className="text-xs font-semibold uppercase tracking-[0.22em] text-zinc-500">{eyebrow}</p>
+        <h2 className="mt-3 text-2xl font-bold leading-tight text-zinc-950 sm:text-4xl">{title}</h2>
+      </div>
+      {children}
     </section>
   )
 }
 
+function Stat({ value, label }: { value: string; label: string }) {
+  return (
+    <div className="rounded-xl border border-zinc-200 bg-white p-4 shadow-sm">
+      <div className="text-xl font-bold">{value}</div>
+      <div className="mt-1 text-xs font-semibold uppercase tracking-wide text-zinc-500">{label}</div>
+    </div>
+  )
+}
+
+function ProofPoint({ label, value }: { label: string; value: string }) {
+  return (
+    <div>
+      <div className="text-xs font-semibold uppercase tracking-[0.16em] text-zinc-500">{label}</div>
+      <div className="mt-1 text-sm font-semibold text-zinc-950">{value}</div>
+    </div>
+  )
+}
+
+function FooterLink({
+  href,
+  label,
+  value,
+  icon: Icon,
+}: {
+  href: string
+  label: string
+  value: string
+  icon: React.ComponentType<{ className?: string }>
+}) {
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noreferrer"
+      className="group flex min-w-0 items-center justify-between gap-4 rounded-md border border-white/15 bg-white/5 px-4 py-3 text-zinc-300 transition hover:border-emerald-300 hover:text-white"
+    >
+      <span className="flex items-center gap-3 font-bold">
+        <Icon className="h-4 w-4 text-emerald-300" />
+        {label}
+      </span>
+      <span className="truncate text-zinc-500 group-hover:text-zinc-300">{value}</span>
+    </a>
+  )
+}
