@@ -18,6 +18,8 @@ type Project = {
   description: string
   stack: string[]
   href?: string
+  image?: string
+  repo?: string
   featured?: boolean
 }
 
@@ -89,6 +91,16 @@ const projects: Project[] = [
     description:
       "A Material Recovery Facility application for tracking recyclable materials through a facility's workflow. I focused on clean data flow, reliable Firebase integration, and an interface teams can understand quickly.",
     stack: ['React', 'Firebase', 'Firestore', 'Firebase Auth'],
+  },
+  {
+    name: 'Instakill Fumigation',
+    kicker: 'Pest control service website',
+    description:
+      'A deployed website for a fumigation business showcasing services, contact details, and booking information. Built to convert visitors into leads with clear calls-to-action and a responsive layout.',
+    stack: ['Responsive UI', 'HTML', 'CSS', 'JavaScript', 'Deployment'],
+    href: 'https://instakill-fumigation.vercel.app/',
+    repo: 'https://github.com/simonwamugunda/instakill-fumigation',
+    image: '/instakill-screenshot.jpg',
   },
 ]
 
@@ -299,7 +311,7 @@ export default function App() {
               </div>
             </div>
             <div className="mt-8 grid grid-cols-3 gap-3 text-center">
-              <Stat value="3+" label="Core projects" />
+              <Stat value="4+" label="Core projects" />
               <Stat value="4" label="Skill lanes" />
               <Stat value="2026" label="Updated" />
             </div>
@@ -424,7 +436,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
     >
       <div
         className={
-          'grid aspect-[16/10] place-items-center rounded-lg border text-4xl font-bold ' +
+          'grid aspect-[16/10] place-items-center rounded-lg border text-4xl font-bold overflow-hidden ' +
           (project.featured
             ? 'border-white/15 bg-emerald-100 text-emerald-950'
             : index === 1
@@ -432,7 +444,11 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
               : 'border-zinc-950/10 bg-zinc-100 text-zinc-950')
         }
       >
-        {String(index + 1).padStart(2, '0')}
+        {project.image ? (
+          <img src={project.image} alt={`${project.name} screenshot`} className="h-full w-full object-cover" />
+        ) : (
+          String(index + 1).padStart(2, '0')
+        )}
       </div>
 
       <div className="mt-6 flex flex-1 flex-col">
@@ -458,19 +474,38 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
           ))}
         </div>
 
-        {project.href ? (
-          <a
-            href={project.href}
-            target="_blank"
-            rel="noreferrer"
-            className={
-              'mt-auto inline-flex w-fit items-center gap-2 pt-7 text-sm font-semibold underline decoration-2 underline-offset-4 ' +
-              (project.featured ? 'text-white decoration-emerald-300' : 'text-zinc-950 decoration-cyan-600')
-            }
-          >
-            View Project
-            <ArrowUpRight className="h-4 w-4" />
-          </a>
+        {project.href || project.repo ? (
+          <div className="mt-auto pt-7 flex gap-3">
+            {project.href && (
+              <a
+                href={project.href}
+                target="_blank"
+                rel="noreferrer"
+                className={
+                  'inline-flex items-center gap-2 rounded-md px-3 py-2 text-sm font-semibold underline decoration-2 underline-offset-4 ' +
+                  (project.featured ? 'text-white decoration-emerald-300' : 'text-zinc-950 decoration-cyan-600')
+                }
+              >
+                View Live
+                <ArrowUpRight className="h-4 w-4" />
+              </a>
+            )}
+
+            {project.repo && (
+              <a
+                href={project.repo}
+                target="_blank"
+                rel="noreferrer"
+                className={
+                  'inline-flex items-center gap-2 rounded-md px-3 py-2 text-sm font-semibold border ' +
+                  (project.featured ? 'border-white/15 text-white' : 'border-zinc-200 text-zinc-700')
+                }
+              >
+                View Code
+                <ArrowUpRight className="h-4 w-4" />
+              </a>
+            )}
+          </div>
         ) : (
           <span className={project.featured ? 'mt-auto pt-7 text-sm font-medium text-zinc-400' : 'mt-auto pt-7 text-sm font-medium text-zinc-500'}>
             Case study available on request
