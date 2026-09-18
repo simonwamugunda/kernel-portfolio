@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import {
   ArrowUpRight,
   Code2,
+  Download,
   FileText,
   GitBranch,
   Mail,
@@ -51,6 +52,13 @@ const navItems: NavItem[] = [
     activeClass: 'border-cyan-700 bg-cyan-700 text-white shadow-cyan-900/15',
     idleClass: 'border-cyan-200 bg-cyan-50 text-cyan-900 hover:border-cyan-400 hover:bg-cyan-100',
     dotClass: 'bg-cyan-500',
+  },
+  {
+    href: '#resumes',
+    label: 'Résumés',
+    activeClass: 'border-rose-700 bg-rose-700 text-white shadow-rose-900/15',
+    idleClass: 'border-rose-200 bg-rose-50 text-rose-900 hover:border-rose-400 hover:bg-rose-100',
+    dotClass: 'bg-rose-500',
   },
   {
     href: '#skills',
@@ -140,6 +148,27 @@ const tools = [
   'Network Support',
   'Hardware Support',
   'Software Support',
+]
+
+const resumes = [
+  {
+    language: 'English',
+    description: 'Download my professional résumé in English.',
+    href: '/Simon_Wamugunda_Waweru_Resume.docx',
+    accent: 'border-emerald-200 bg-emerald-50 text-emerald-800',
+  },
+  {
+    language: 'Kiswahili',
+    description: 'Pakua wasifu wangu wa kitaalamu kwa Kiswahili.',
+    href: '/Simon_Wamugunda_Waweru_Resume_Kiswahili.docx',
+    accent: 'border-cyan-200 bg-cyan-50 text-cyan-800',
+  },
+  {
+    language: 'Kikuyu',
+    description: 'Hingura wasifu wakwa wa githomo na mũrimo na Gĩkũyũ.',
+    href: '/Simon_Wamugunda_Waweru_Resume_Kikuyu.docx',
+    accent: 'border-amber-200 bg-amber-50 text-amber-800',
+  },
 ]
 
 export default function App() {
@@ -350,6 +379,32 @@ export default function App() {
                 me strengthen technical support, user communication, and disciplined project delivery.
               </p>
             </div>
+          </div>
+        </Section>
+
+        <Section id="resumes" eyebrow="Résumé" title="My résumé, in three languages">
+          <p className="-mt-2 mb-8 max-w-2xl leading-7 text-zinc-700">
+            Choose the version that works best for you. Each file opens or downloads as a Microsoft Word document.
+          </p>
+          <div className="grid gap-4 md:grid-cols-3">
+            {resumes.map((resume) => (
+              <a
+                key={resume.language}
+                href={resume.href}
+                download
+                className="group rounded-xl border border-zinc-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:border-rose-300 hover:shadow-md"
+              >
+                <div className={'grid h-11 w-11 place-items-center rounded-lg border ' + resume.accent}>
+                  <FileText className="h-5 w-5" />
+                </div>
+                <h3 className="mt-5 text-lg font-bold text-zinc-950">{resume.language}</h3>
+                <p className="mt-3 min-h-14 leading-7 text-zinc-700">{resume.description}</p>
+                <span className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-rose-800 underline decoration-2 underline-offset-4 group-hover:text-rose-950">
+                  Download résumé
+                  <Download className="h-4 w-4" />
+                </span>
+              </a>
+            ))}
           </div>
         </Section>
 
