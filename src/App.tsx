@@ -171,6 +171,18 @@ const resumes = [
   },
 ]
 
+const autobiography = {
+  title: 'Autobiographical Essay',
+  description: 'Read or download my full 25-page autobiographical essay.',
+  href: '/Simon_Wamugunda_Waweru_Autobiographical_Essay_Full_25Pages.docx',
+}
+
+const slideDeck = {
+  title: 'From Root to Algorithm',
+  description: 'View or download my autobiographical slide deck as a PDF.',
+  href: '/From%20Root%20to%20Algorithm%20-%20Autobiographical%20Slide%20Deck.pdf',
+}
+
 export default function App() {
   const year = useMemo(() => new Date().getFullYear(), [])
   const [activeSection, setActiveSection] = useState('work')
@@ -382,7 +394,7 @@ export default function App() {
           </div>
         </Section>
 
-        <Section id="resumes" eyebrow="Résumé" title="My résumé, in three languages">
+        <Section id="resumes" eyebrow="Career documents" title="My résumé, in three languages">
           <p className="-mt-2 mb-8 max-w-2xl leading-7 text-zinc-700">
             Choose the version that works best for you. Each file opens or downloads as a Microsoft Word document.
           </p>
@@ -405,6 +417,42 @@ export default function App() {
                 </span>
               </a>
             ))}
+          </div>
+
+          <div className="mt-4 rounded-xl border border-violet-200 bg-violet-50 p-6 shadow-sm sm:flex sm:items-center sm:justify-between sm:gap-6">
+            <div>
+              <div className="grid h-11 w-11 place-items-center rounded-lg border border-violet-200 bg-white text-violet-800">
+                <FileText className="h-5 w-5" />
+              </div>
+              <h3 className="mt-4 text-lg font-bold text-zinc-950">{autobiography.title}</h3>
+              <p className="mt-2 leading-7 text-zinc-700">{autobiography.description}</p>
+            </div>
+            <a
+              href={autobiography.href}
+              download
+              className="mt-5 inline-flex shrink-0 items-center justify-center gap-2 rounded-md bg-violet-800 px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-violet-900 sm:mt-0"
+            >
+              Download autobiography
+              <Download className="h-4 w-4" />
+            </a>
+          </div>
+
+          <div className="mt-4 rounded-xl border border-sky-200 bg-sky-50 p-6 shadow-sm sm:flex sm:items-center sm:justify-between sm:gap-6">
+            <div>
+              <div className="grid h-11 w-11 place-items-center rounded-lg border border-sky-200 bg-white text-sky-800">
+                <FileText className="h-5 w-5" />
+              </div>
+              <h3 className="mt-4 text-lg font-bold text-zinc-950">{slideDeck.title}</h3>
+              <p className="mt-2 leading-7 text-zinc-700">{slideDeck.description}</p>
+            </div>
+            <a
+              href={slideDeck.href}
+              download
+              className="mt-5 inline-flex shrink-0 items-center justify-center gap-2 rounded-md bg-sky-800 px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-sky-900 sm:mt-0"
+            >
+              Download slide deck
+              <Download className="h-4 w-4" />
+            </a>
           </div>
         </Section>
 
