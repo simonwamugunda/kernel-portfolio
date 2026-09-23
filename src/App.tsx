@@ -1,8 +1,10 @@
 import { useEffect, useMemo, useState } from 'react'
+import { renderAsync } from 'docx-preview'
 import {
   ArrowUpRight,
   Code2,
   Download,
+  Eye,
   FileText,
   GitBranch,
   Mail,
@@ -10,6 +12,7 @@ import {
   Network,
   PenTool,
   Wrench,
+  X,
 } from 'lucide-react'
 import './styles.css'
 
@@ -186,6 +189,7 @@ const slideDeck = {
 export default function App() {
   const year = useMemo(() => new Date().getFullYear(), [])
   const [activeSection, setActiveSection] = useState('work')
+  const [viewingDocument, setViewingDocument] = useState<{ title: string; href: string } | null>(null)
 
   useEffect(() => {
     const updateFromHash = () => {
@@ -225,6 +229,31 @@ export default function App() {
       observer.disconnect()
     }
   }, [])
+
+
+  useEffect(() => {
+    if (!viewingDocument) return
+    const preview = document.getElementById('docx-preview')
+    if (!preview) return
+
+    let cancelled = false
+    preview.replaceChildren()
+    fetch(viewingDocument.href)
+      .then((response) => {
+        if (!response.ok) throw new Error('Could not load this document.')
+        return response.arrayBuffer()
+      })
+      .then((data) => {
+        if (!cancelled) return renderAsync(data, preview, preview, { inWrapper: true })
+      })
+      .catch(() => {
+        if (!cancelled) preview.textContent = 'This document could not be previewed. Please download it to view it.'
+      })
+
+    return () => {
+      cancelled = true
+    }
+  }, [viewingDocument])
 
   return (
     <div className="min-h-screen bg-[#f8faf9] text-zinc-950 antialiased">
@@ -400,22 +429,24 @@ export default function App() {
           </p>
           <div className="grid gap-4 md:grid-cols-3">
             {resumes.map((resume) => (
-              <a
+              <article
                 key={resume.language}
-                href={resume.href}
-                download
-                className="group rounded-xl border border-zinc-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:border-rose-300 hover:shadow-md"
+                className="rounded-xl border border-zinc-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:border-rose-300 hover:shadow-md"
               >
                 <div className={'grid h-11 w-11 place-items-center rounded-lg border ' + resume.accent}>
                   <FileText className="h-5 w-5" />
                 </div>
                 <h3 className="mt-5 text-lg font-bold text-zinc-950">{resume.language}</h3>
                 <p className="mt-3 min-h-14 leading-7 text-zinc-700">{resume.description}</p>
-                <span className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-rose-800 underline decoration-2 underline-offset-4 group-hover:text-rose-950">
-                  Download résumé
-                  <Download className="h-4 w-4" />
-                </span>
-              </a>
+                <div className="mt-6 flex flex-wrap gap-3">
+                  <button type="button" onClick={() => setViewingDocument({ title: `${resume.language} résumé`, href: resume.href })} className="inline-flex items-center gap-2 rounded-md bg-rose-800 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-rose-900">
+                    View résumé <Eye className="h-4 w-4" />
+                  </button>
+                  <a href={resume.href} download className="inline-flex items-center gap-2 rounded-md border border-zinc-300 px-4 py-2.5 text-sm font-semibold text-zinc-800 transition hover:bg-zinc-50">
+                    Download <Download className="h-4 w-4" />
+                  </a>
+                </div>
+              </article>
             ))}
           </div>
 
@@ -427,14 +458,14 @@ export default function App() {
               <h3 className="mt-4 text-lg font-bold text-zinc-950">{autobiography.title}</h3>
               <p className="mt-2 leading-7 text-zinc-700">{autobiography.description}</p>
             </div>
-            <a
-              href={autobiography.href}
-              download
-              className="mt-5 inline-flex shrink-0 items-center justify-center gap-2 rounded-md bg-violet-800 px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-violet-900 sm:mt-0"
-            >
-              Download autobiography
-              <Download className="h-4 w-4" />
-            </a>
+            <div className="mt-5 flex shrink-0 flex-wrap gap-3 sm:mt-0">
+              <button type="button" onClick={() => setViewingDocument({ title: autobiography.title, href: autobiography.href })} className="inline-flex items-center justify-center gap-2 rounded-md bg-violet-800 px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-violet-900">
+                View essay <Eye className="h-4 w-4" />
+              </button>
+              <a href={autobiography.href} download className="inline-flex items-center justify-center gap-2 rounded-md border border-violet-300 px-5 py-3 text-sm font-semibold text-violet-950 transition hover:bg-violet-100">
+                Download <Download className="h-4 w-4" />
+              </a>
+            </div>
           </div>
 
           <div className="mt-4 rounded-xl border border-sky-200 bg-sky-50 p-6 shadow-sm sm:flex sm:items-center sm:justify-between sm:gap-6">
@@ -445,14 +476,14 @@ export default function App() {
               <h3 className="mt-4 text-lg font-bold text-zinc-950">{slideDeck.title}</h3>
               <p className="mt-2 leading-7 text-zinc-700">{slideDeck.description}</p>
             </div>
-            <a
-              href={slideDeck.href}
-              download
-              className="mt-5 inline-flex shrink-0 items-center justify-center gap-2 rounded-md bg-sky-800 px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-sky-900 sm:mt-0"
-            >
-              Download slide deck
-              <Download className="h-4 w-4" />
-            </a>
+            <div className="mt-5 flex shrink-0 flex-wrap gap-3 sm:mt-0">
+              <a href={slideDeck.href} target="_blank" rel="noreferrer" className="inline-flex items-center justify-center gap-2 rounded-md bg-sky-800 px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-sky-900">
+                View slide deck <Eye className="h-4 w-4" />
+              </a>
+              <a href={slideDeck.href} download className="inline-flex items-center justify-center gap-2 rounded-md border border-sky-300 px-5 py-3 text-sm font-semibold text-sky-950 transition hover:bg-sky-100">
+                Download <Download className="h-4 w-4" />
+              </a>
+            </div>
           </div>
         </Section>
 
@@ -523,6 +554,19 @@ export default function App() {
           </div>
         </div>
       </footer>
+      {viewingDocument && (
+        <div className="fixed inset-0 z-50 flex flex-col bg-black/60 p-3 sm:p-6" role="dialog" aria-modal="true" aria-label={`Preview ${viewingDocument.title}`}>
+          <div className="mx-auto flex min-h-0 w-full max-w-5xl flex-1 flex-col overflow-hidden rounded-xl bg-white shadow-2xl">
+            <div className="flex items-center justify-between border-b border-zinc-200 px-4 py-3 sm:px-6">
+              <h2 className="font-bold text-zinc-950">{viewingDocument.title}</h2>
+              <button type="button" onClick={() => setViewingDocument(null)} aria-label="Close document preview" className="rounded-md p-2 text-zinc-600 transition hover:bg-zinc-100 hover:text-zinc-950">
+                <X className="h-5 w-5" />
+              </button>
+            </div>
+            <div id="docx-preview" className="min-h-0 flex-1 overflow-auto bg-zinc-100 p-4" />
+          </div>
+        </div>
+      )}
     </div>
   )
 }
