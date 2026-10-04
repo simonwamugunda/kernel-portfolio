@@ -186,6 +186,14 @@ const slideDeck = {
   href: '/From%20Root%20to%20Algorithm%20-%20Autobiographical%20Slide%20Deck.pdf',
 }
 
+const photoEssay = {
+  title: 'The Photo Essay',
+  description:
+    'A documentary photography essay by Patrick Sutherland, published in Visual Anthropology Review (2016). The article discusses the photo essay through the work of Roger Hutchings and other documentary photographers.',
+  href: '/photographic-essay.pdf',
+  photosHref: 'http://www.benmurphy.co.uk/homes-of-the-american-dispossessed#1',
+}
+
 export default function App() {
   const year = useMemo(() => new Date().getFullYear(), [])
   const [activeSection, setActiveSection] = useState('work')
@@ -423,9 +431,9 @@ export default function App() {
           </div>
         </Section>
 
-        <Section id="resumes" eyebrow="Career documents" title="My résumé, in three languages">
+        <Section id="resumes" eyebrow="Career documents" title="Documents and writing">
           <p className="-mt-2 mb-8 max-w-2xl leading-7 text-zinc-700">
-            Choose the version that works best for you. Each file opens or downloads as a Microsoft Word document.
+            Browse my résumé, autobiographical work, and selected reading. Word documents can be previewed here; PDFs open in your browser.
           </p>
           <div className="grid gap-4 md:grid-cols-3">
             {resumes.map((resume) => (
@@ -481,6 +489,27 @@ export default function App() {
                 View slide deck <Eye className="h-4 w-4" />
               </a>
               <a href={slideDeck.href} download className="inline-flex items-center justify-center gap-2 rounded-md border border-sky-300 px-5 py-3 text-sm font-semibold text-sky-950 transition hover:bg-sky-100">
+                Download <Download className="h-4 w-4" />
+              </a>
+            </div>
+          </div>
+
+          <div className="mt-4 rounded-xl border border-amber-200 bg-amber-50 p-6 shadow-sm sm:flex sm:items-center sm:justify-between sm:gap-6">
+            <div>
+              <div className="grid h-11 w-11 place-items-center rounded-lg border border-amber-200 bg-white text-amber-800">
+                <FileText className="h-5 w-5" />
+              </div>
+              <h3 className="mt-4 text-lg font-bold text-zinc-950">{photoEssay.title}</h3>
+              <p className="mt-2 max-w-2xl leading-7 text-zinc-700">{photoEssay.description}</p>
+              <a href={photoEssay.photosHref} target="_blank" rel="noreferrer" className="mt-3 inline-flex items-center gap-1 text-sm font-semibold text-amber-900 underline underline-offset-4 hover:text-amber-950">
+                View the photographs referenced in the essay <ArrowUpRight className="h-4 w-4" />
+              </a>
+            </div>
+            <div className="mt-5 flex shrink-0 flex-wrap gap-3 sm:mt-0">
+              <a href={photoEssay.href} target="_blank" rel="noreferrer" className="inline-flex items-center justify-center gap-2 rounded-md bg-amber-800 px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-amber-900">
+                View essay <Eye className="h-4 w-4" />
+              </a>
+              <a href={photoEssay.href} download className="inline-flex items-center justify-center gap-2 rounded-md border border-amber-300 px-5 py-3 text-sm font-semibold text-amber-950 transition hover:bg-amber-100">
                 Download <Download className="h-4 w-4" />
               </a>
             </div>
