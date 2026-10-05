@@ -23,6 +23,7 @@ type Project = {
   stack: string[]
   href?: string
   image?: string
+  imageFit?: 'cover' | 'contain'
   repo?: string
   featured?: boolean
 }
@@ -88,6 +89,15 @@ const projects: Project[] = [
       'A supplier-focused gas management project built to support product visibility, customer access, and smoother day-to-day operations. The work sharpened my ability to design practical interfaces around real business needs.',
     stack: ['React', 'JavaScript', 'Responsive UI', 'GitHub'],
     href: 'https://github.com/simonwamugunda/mwawa-gas',
+  },
+  {
+    name: 'RANKS Project Tracker',
+    kicker: 'Project and team management platform',
+    description:
+      'A shared workspace that brings project progress, team coordination, and payment visibility together. RANKS is designed to give teams a clear view of the work ahead and keep everyone moving in sync.',
+    stack: ['Project Tracking', 'Team Workflows', 'Payment Tracking', 'Firebase Authentication'],
+    image: '/ranks.png',
+    imageFit: 'contain',
   },
   {
     name: 'DeKUT Student Medical Centre',
@@ -389,7 +399,7 @@ export default function App() {
               </div>
             </div>
             <div className="mt-8 grid grid-cols-3 gap-3 text-center">
-              <Stat value="4+" label="Core projects" />
+              <Stat value="5+" label="Core projects" />
               <Stat value="4" label="Skill lanes" />
               <Stat value="2026" label="Updated" />
             </div>
@@ -621,7 +631,11 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
         }
       >
         {project.image ? (
-          <img src={project.image} alt={`${project.name} screenshot`} className="h-full w-full object-cover" />
+          <img
+            src={project.image}
+            alt={`${project.name} screenshot`}
+            className={'h-full w-full ' + (project.imageFit === 'contain' ? 'object-contain' : 'object-cover')}
+          />
         ) : (
           String(index + 1).padStart(2, '0')
         )}
