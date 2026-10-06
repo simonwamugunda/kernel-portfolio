@@ -580,7 +580,11 @@ export default function App() {
 
             <div className="grid gap-3 text-sm">
               <FooterLink href="https://github.com/simonwamugunda" label="GitHub" value="github.com/simonwamugunda" icon={GitBranch} />
-              <FooterLink href="https://linkedin.com/in/simonwamugunda" label="LinkedIn" value="linkedin.com/in/simonwamugunda" icon={Network} />
+              <FooterLink href="https://www.linkedin.com/in/simon-wamugunda-519aa1383" label="LinkedIn" value="linkedin.com/in/simon-wamugunda-519aa1383" icon={Network} />
+              <FooterLink href="https://www.facebook.com/share/1C4ELSXRRy/" label="Facebook" value="facebook.com/share/1C4ELSXRRy" icon={Network} />
+              <FooterLink href="https://www.instagram.com/simonwaweru25" label="Instagram" value="instagram.com/simonwaweru25" icon={Network} />
+              <FooterLink href="https://x.com/simonwamug61257" label="X" value="x.com/simonwamug61257" icon={Network} />
+              <FooterLink href="https://wa.me/254757153838" label="WhatsApp" value="+254 757 153 838" icon={Network} />
               <div className="flex items-center gap-3 rounded-md border border-white/15 bg-white/5 px-4 py-3 text-zinc-300">
                 <MapPin className="h-4 w-4 text-emerald-300" />
                 Nairobi, Kenya
