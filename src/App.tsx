@@ -112,6 +112,8 @@ const projects: Project[] = [
     description:
       "A Material Recovery Facility application for tracking recyclable materials through a facility's workflow. I focused on clean data flow, reliable Firebase integration, and an interface teams can understand quickly.",
     stack: ['React', 'Firebase', 'Firestore', 'Firebase Auth'],
+    image: '/mrf-login-screenshot.png',
+    imageFit: 'contain',
   },
   {
     name: 'Instakill Fumigation',
