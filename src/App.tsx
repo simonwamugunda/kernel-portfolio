@@ -394,7 +394,7 @@ export default function App() {
               </div>
               <div className="aspect-[4/5] overflow-hidden rounded-xl border border-zinc-200 bg-zinc-200">
               <img
-                src="/portfolio.jpeg"
+                src="/portfolio1.jpeg"
                 alt="Simon Wamugunda Waweru"
                 className="h-full w-full object-cover"
               />
