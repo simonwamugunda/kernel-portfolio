@@ -206,6 +206,9 @@ const photoEssay = {
   photosHref: 'http://www.benmurphy.co.uk/homes-of-the-american-dispossessed#1',
 }
 
+const mpesaVideo = 'https://drive.google.com/file/d/1NKUe9NwvU23vinEOVkBNfFUGW6h9SPE6/view?usp=sharing'
+const mpesaVideoEmbed = 'https://drive.google.com/file/d/1NKUe9NwvU23vinEOVkBNfFUGW6h9SPE6/preview'
+
 export default function App() {
   const year = useMemo(() => new Date().getFullYear(), [])
   const [activeSection, setActiveSection] = useState('work')
@@ -447,6 +450,43 @@ export default function App() {
           <p className="-mt-2 mb-8 max-w-2xl leading-7 text-zinc-700">
             Browse my résumé, autobiographical work, and selected reading. Word documents can be previewed here; PDFs open in your browser.
           </p>
+          <article className="mb-8 overflow-hidden rounded-xl border border-emerald-200 bg-white shadow-sm">
+            <div className="grid gap-6 bg-emerald-50 p-6 sm:p-8">
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-emerald-800">20-minute video presentation · IT innovation</p>
+                <h3 className="mt-3 text-2xl font-bold tracking-tight text-zinc-950">M-Pesa: How a Text-Message Idea Rebuilt Money in Africa</h3>
+                <p className="mt-3 max-w-3xl leading-7 text-zinc-700">A look at the human need, SMS technology, and agent network behind M-Pesa, alongside its impact, risks, and lessons for IT students.</p>
+              </div>
+              <div className="aspect-video w-full overflow-hidden rounded-lg bg-zinc-950 shadow-md">
+                <iframe
+                  src={mpesaVideoEmbed}
+                  title="M-Pesa: How a Text-Message Idea Rebuilt Money in Africa"
+                  className="h-full w-full"
+                  allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
+                  allowFullScreen
+                  referrerPolicy="strict-origin-when-cross-origin"
+                />
+              </div>
+              <a href={mpesaVideo} target="_blank" rel="noreferrer" className="w-fit text-sm font-semibold text-emerald-900 underline underline-offset-4 hover:text-emerald-950">
+                Open video on Google Drive <ArrowUpRight className="ml-1 inline h-4 w-4" />
+              </a>
+            </div>
+            <div className="grid gap-4 p-6 sm:p-8">
+              <details className="group rounded-lg border border-zinc-200 p-4" open>
+                <summary className="cursor-pointer font-semibold text-zinc-950">English abstract</summary>
+                <p className="mt-3 leading-7 text-zinc-700">This presentation examines M-Pesa, the mobile money service Safaricom launched in Kenya in 2007, as a landmark African innovation in information technology. It explains the problem M-Pesa solved: millions of people had phones but no access to banks. A simple SMS-based system, backed by a network of agents, turned phones into wallets. In the year ended 31 March 2026, M-Pesa processed KSh 41.68 trillion and served 40.99 million monthly active customers in Kenya. Suri and Jack (2016) estimated that M-Pesa lifted about 194,000 Kenyan households, or 2 percent, out of poverty, with especially strong effects among female-headed households. The presentation also discusses fraud, data privacy, and transaction costs, and draws a lesson for IT students: powerful innovations begin with a real human need, not the most advanced technology.</p>
+              </details>
+              <details className="group rounded-lg border border-zinc-200 p-4">
+                <summary className="cursor-pointer font-semibold text-zinc-950">Muhtasari wa Kiswahili</summary>
+                <p className="mt-3 leading-7 text-zinc-700">Wasilisho hili linachambua M-Pesa, huduma ya fedha kwa simu ya mkononi iliyozinduliwa na Safaricom nchini Kenya mwaka 2007, kama ubunifu mkubwa wa Kiafrika katika teknolojia ya habari. Linaeleza tatizo ambalo M-Pesa ilitatua: mamilioni ya watu walikuwa na simu lakini hawakuwa na huduma za benki. Mfumo rahisi wa ujumbe mfupi (SMS), pamoja na mtandao wa mawakala, uligeuza simu kuwa pochi. Katika mwaka ulioisha tarehe 31 Machi 2026, M-Pesa ilichakata miamala yenye thamani ya shilingi trilioni 41.68 na kuhudumia wateja milioni 40.99 wanaoitumia kila mwezi nchini Kenya. Suri na Jack (2016) walikadiria kuwa M-Pesa iliinua takriban kaya 194,000, sawa na asilimia 2, kutoka katika umaskini, huku athari kubwa zaidi ikionekana katika kaya zinazoongozwa na wanawake. Wasilisho pia linajadili ulaghai, faragha ya data na gharama za miamala, kisha linatoa funzo kwa wanafunzi wa TEHAMA: ubunifu wenye nguvu huanza na mahitaji halisi ya watu, si teknolojia ya hali ya juu zaidi.</p>
+              </details>
+              <details className="group rounded-lg border border-zinc-200 p-4">
+                <summary className="cursor-pointer font-semibold text-zinc-950">Ũũtũũrio wa Gĩkũyũ (Kikuyu)</summary>
+                <p className="mt-3 leading-7 text-zinc-700">Ũhoro ũyũ ũkwaria ũhoro wa M-Pesa, mũtaratara wa mbeca cia thimũ ũrĩa Safaricom yambĩrĩirie bũrũri-inĩ wa Kenya mwaka wa 2007. Nĩ ũtaarĩria thĩna ũrĩa M-Pesa ĩnyitire: andũ aingĩ maarĩ na thimũ no matarĩ na ũhoro wa mabenki. Mũtaratara wa ũhoro mũkuhĩ (SMS) na mawakala nĩ watũmire thimũ yothe ĩgĩe ta mũkoba wa mbeca. Mwaka-inĩ ũrĩa warĩkĩrie mweri wa Gatatũ (Machi) 2026, mbeca cia shilingi trilioni 41.68 nĩ ciahĩtũkire thĩinĩ wa M-Pesa, na andũ milioni 40.99 nĩ maamĩhũthĩraga o mweri bũrũri-inĩ wa Kenya. Ũthuthuria wa Suri na Jack (2016) nĩ wonanirie atĩ M-Pesa nĩ ĩguũrire nyũmba 194,000, kana 2%, kuuma ũthĩni-inĩ, na mũno nyũmba iria ĩtongoragio nĩ atumia. Ũhoro ũyũ nĩ ũgaaria na ũhoro wa ũici, ũgitĩri wa ũhoro wa andũ, na mahuthĩro ma mbeca, na ũgatwĩra arutwo a TEHAMA atĩ ũmũthingu mwega wambagĩra na bata wa andũ.</p>
+              </details>
+              <p className="text-xs leading-5 text-zinc-500">Sources: <a className="underline underline-offset-2 hover:text-zinc-800" href="https://www.linkedin.com/posts/m-pesa-africa_safaricom-plc-group-has-released-financial-activity-7458472704816484352-EjWD" target="_blank" rel="noreferrer">Safaricom FY2026 results</a>; Suri and Jack, <a className="underline underline-offset-2 hover:text-zinc-800" href="https://doi.org/10.1126/science.aah5309" target="_blank" rel="noreferrer">“The long-run poverty and gender impacts of mobile money,” Science (2016)</a>.</p>
+            </div>
+          </article>
           <div className="grid gap-4 md:grid-cols-3">
             {resumes.map((resume) => (
               <article
