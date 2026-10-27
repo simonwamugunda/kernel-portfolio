@@ -397,7 +397,6 @@ export default function App() {
                 <img
                   src="/portfolio2.jpeg"
                   alt="Simon Wamugunda Waweru, portrait"
-                  onError={(event) => { event.currentTarget.onerror = null; event.currentTarget.src = '/portfolio.jpeg' }}
                   fetchPriority="high"
                 />
                 <figcaption><span className="status-dot" /> Nairobi, Kenya · Available for opportunities</figcaption>

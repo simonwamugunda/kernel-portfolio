@@ -90,8 +90,9 @@ body {
   overflow: hidden;
   border: 8px solid white;
   border-radius: 1.5rem;
-  background: #e4e4e7;
+  background: #eadfd6;
   box-shadow: 0 30px 80px rgb(15 23 42 / 15%);
+  animation: portrait-float 7s ease-in-out 700ms infinite;
 }
 
 .portrait-main img,
@@ -103,7 +104,8 @@ body {
 }
 
 .portrait-main img {
-  object-position: center 35%;
+  object-fit: contain;
+  object-position: center;
 }
 
 .portrait-main figcaption {
@@ -243,6 +245,11 @@ footer::before {
 @keyframes rise-in {
   from { opacity: 0; transform: translateY(12px); }
   to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes portrait-float {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -7px; }
 }
 
 #work:target {
