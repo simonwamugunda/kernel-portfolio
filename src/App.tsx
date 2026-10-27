@@ -208,6 +208,8 @@ const photoEssay = {
 
 const mpesaVideo = 'https://drive.google.com/file/d/1NKUe9NwvU23vinEOVkBNfFUGW6h9SPE6/view?usp=sharing'
 const mpesaVideoEmbed = 'https://drive.google.com/file/d/1NKUe9NwvU23vinEOVkBNfFUGW6h9SPE6/preview'
+const africanCultureVideo = 'https://drive.google.com/file/d/1pOwrje8TSC9JMRhatdsMfawtsM-Buuh2/view?usp=drive_link'
+const africanCultureVideoEmbed = 'https://drive.google.com/file/d/1pOwrje8TSC9JMRhatdsMfawtsM-Buuh2/preview'
 
 export default function App() {
   const year = useMemo(() => new Date().getFullYear(), [])
@@ -451,7 +453,7 @@ export default function App() {
             Browse my résumé, autobiographical work, and selected reading. Word documents can be previewed here; PDFs open in your browser.
           </p>
           <article className="mb-8 overflow-hidden rounded-xl border border-emerald-200 bg-white shadow-sm">
-            <div className="grid gap-6 bg-emerald-50 p-6 sm:p-8">
+            <div className="grid gap-6 bg-emerald-50 p-6 sm:p-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
               <div>
                 <p className="text-xs font-semibold uppercase tracking-[0.18em] text-emerald-800">20-minute video presentation · IT innovation</p>
                 <h3 className="mt-3 text-2xl font-bold tracking-tight text-zinc-950">M-Pesa: How a Text-Message Idea Rebuilt Money in Africa</h3>
@@ -485,6 +487,42 @@ export default function App() {
                 <p className="mt-3 leading-7 text-zinc-700">Ũhoro ũyũ ũkwaria ũhoro wa M-Pesa, mũtaratara wa mbeca cia thimũ ũrĩa Safaricom yambĩrĩirie bũrũri-inĩ wa Kenya mwaka wa 2007. Nĩ ũtaarĩria thĩna ũrĩa M-Pesa ĩnyitire: andũ aingĩ maarĩ na thimũ no matarĩ na ũhoro wa mabenki. Mũtaratara wa ũhoro mũkuhĩ (SMS) na mawakala nĩ watũmire thimũ yothe ĩgĩe ta mũkoba wa mbeca. Mwaka-inĩ ũrĩa warĩkĩrie mweri wa Gatatũ (Machi) 2026, mbeca cia shilingi trilioni 41.68 nĩ ciahĩtũkire thĩinĩ wa M-Pesa, na andũ milioni 40.99 nĩ maamĩhũthĩraga o mweri bũrũri-inĩ wa Kenya. Ũthuthuria wa Suri na Jack (2016) nĩ wonanirie atĩ M-Pesa nĩ ĩguũrire nyũmba 194,000, kana 2%, kuuma ũthĩni-inĩ, na mũno nyũmba iria ĩtongoragio nĩ atumia. Ũhoro ũyũ nĩ ũgaaria na ũhoro wa ũici, ũgitĩri wa ũhoro wa andũ, na mahuthĩro ma mbeca, na ũgatwĩra arutwo a TEHAMA atĩ ũmũthingu mwega wambagĩra na bata wa andũ.</p>
               </details>
               <p className="text-xs leading-5 text-zinc-500">Sources: <a className="underline underline-offset-2 hover:text-zinc-800" href="https://www.linkedin.com/posts/m-pesa-africa_safaricom-plc-group-has-released-financial-activity-7458472704816484352-EjWD" target="_blank" rel="noreferrer">Safaricom FY2026 results</a>; Suri and Jack, <a className="underline underline-offset-2 hover:text-zinc-800" href="https://doi.org/10.1126/science.aah5309" target="_blank" rel="noreferrer">“The long-run poverty and gender impacts of mobile money,” Science (2016)</a>.</p>
+            </div>
+          </article>
+          <article className="mb-8 overflow-hidden rounded-xl border border-cyan-200 bg-white shadow-sm">
+            <div className="grid gap-6 bg-cyan-50 p-6 sm:p-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-cyan-800">20-minute video presentation · African culture and communication</p>
+                <h3 className="mt-3 text-2xl font-bold tracking-tight text-zinc-950">From Talking Drums to Digital Networks</h3>
+                <p className="mt-3 max-w-3xl leading-7 text-zinc-700">How African communities shared messages across distance before modern technology, and why preserving cultural knowledge and promoting gender awareness matter for a fair digital future.</p>
+                <a href={africanCultureVideo} target="_blank" rel="noreferrer" className="mt-5 inline-flex w-fit items-center text-sm font-semibold text-cyan-900 underline underline-offset-4 hover:text-cyan-950">
+                  Open video on Google Drive <ArrowUpRight className="ml-1 inline h-4 w-4" />
+                </a>
+              </div>
+              <div className="aspect-video w-full overflow-hidden rounded-lg bg-zinc-950 shadow-md">
+                <iframe
+                  src={africanCultureVideoEmbed}
+                  title="From Talking Drums to Digital Networks: African Culture and Gender Awareness"
+                  className="h-full w-full"
+                  allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
+                  allowFullScreen
+                  referrerPolicy="strict-origin-when-cross-origin"
+                />
+              </div>
+            </div>
+            <div className="grid gap-3 p-6 sm:p-8 lg:grid-cols-3">
+              <details className="group rounded-lg border border-zinc-200 p-4" open>
+                <summary className="cursor-pointer font-semibold text-zinc-950">English abstract</summary>
+                <p className="mt-3 leading-7 text-zinc-700">This presentation shows why African culture matters by studying one cultural practice: how African societies communicated across distance before modern technology. It explains how talking drums imitated the tones of spoken language, how town criers and ululation carried news, warnings and history, and how these systems already used ideas that information technology now depends on, such as encoding, relaying and shared protocols. The second half argues that gender awareness is essential in African society. Women and men have always played different, valued roles in communication and community life, yet inequality persists, including in technology: in 2025 the mobile internet gender gap in sub-Saharan Africa was 26 percent, and about 230 million women in the region remained unconnected (GSMA, 2026). The presentation concludes that Africa can honour its heritage and build a fairer digital future by preserving its cultural knowledge, including women&apos;s knowledge, and by making sure women and girls are full participants in technology.</p>
+              </details>
+              <details className="group rounded-lg border border-zinc-200 p-4">
+                <summary className="cursor-pointer font-semibold text-zinc-950">Muhtasari wa Kiswahili</summary>
+                <p className="mt-3 leading-7 text-zinc-700">Wasilisho hili linaonyesha umuhimu wa utamaduni wa Kiafrika kwa kuchunguza desturi moja: jinsi jamii za Kiafrika zilivyowasiliana umbali mrefu kabla ya teknolojia ya kisasa. Linaeleza jinsi ngoma za mazungumzo zilivyoiga toni za lugha ya kuzungumza, jinsi wapiga mbiu na vigelegele vilivyobeba habari, tahadhari na historia, na jinsi mifumo hiyo ilivyotumia tayari mawazo ambayo TEHAMA ya leo inayategemea, kama vile usimbaji, urushaji wa ujumbe kwa vituo vya kati na itifaki zinazokubaliwa na wote. Sehemu ya pili inahoji kuwa uelewa wa masuala ya kijinsia ni muhimu katika jamii ya Kiafrika. Wanawake na wanaume siku zote wamekuwa na majukumu tofauti yenye thamani katika mawasiliano na maisha ya jamii, lakini ukosefu wa usawa bado upo, ikiwemo katika teknolojia: mwaka 2025 pengo la kijinsia la matumizi ya intaneti ya simu katika Afrika Kusini mwa Jangwa la Sahara lilikuwa asilimia 26, na takriban wanawake milioni 230 katika kanda hiyo hawakuwa wameunganishwa (GSMA, 2026). Hitimisho ni kwamba Afrika inaweza kuheshimu urithi wake na kujenga mustakabali wa kidijitali ulio wa haki zaidi kwa kuhifadhi maarifa yake ya kitamaduni, ikiwemo maarifa ya wanawake, na kuhakikisha wanawake na wasichana wanashiriki kikamilifu katika teknolojia.</p>
+              </details>
+              <details className="group rounded-lg border border-zinc-200 p-4">
+                <summary className="cursor-pointer font-semibold text-zinc-950">Ũũtũũrio wa Gĩkũyũ (Kikuyu)</summary>
+                <p className="mt-3 leading-7 text-zinc-700">Ũhoro ũyũ ũkwaria ũhoro wa mũtugo wa Afrika wa gũtũmana ũhoro, kuuma ngoma iria ciaragia nginya thimũ na intaneti cia ũmũthĩ. Nĩ ũtaarĩria ũrĩa andu a Afrika maatũmagĩra ngoma kũhĩtũkĩria ũhoro kũrĩa kũraihu, na ũrĩa mũtugo ũcio ũhaanaine na mitaratara ya kompyuta ya ũmũthĩ. Ũhoro ũyũ nĩ ũraaria atĩ gũkorũo na ũmenyo wa kũringana kwa arũme na atumia nĩ bata mũno thĩinĩ wa andũ a Afrika. Mwaka wa 2025, ũtarĩ wa kũringana wa ũhũthĩri wa intaneti ya thimũ thĩinĩ wa Afrika ya mũhuro wa Sahara watũkĩte 26%, na atumia ta milioni 230 matarĩ na intaneti (GSMA, 2026). Ũhoro ũyũ ũrĩkĩrĩria na kuuga atĩ Afrika nĩ ĩngĩhĩtũkĩria mũtugo wayo, na ĩakĩre ũthingu wa ũmũthĩ mũriũ, angĩkorũo atumia na airĩtu nĩ makoragĩra ũthiĩ-inĩ wa TEHAMA marĩ a gĩkĩrĩ.</p>
+              </details>
             </div>
           </article>
           <div className="grid gap-4 md:grid-cols-3">
