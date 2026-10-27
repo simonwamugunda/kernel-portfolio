@@ -281,8 +281,8 @@ export default function App() {
   }, [viewingDocument])
 
   return (
-    <div className="min-h-screen bg-[#f8faf9] text-zinc-950 antialiased">
-      <header className="sticky top-0 z-30 border-b border-zinc-200/80 bg-[#f8faf9]/95 backdrop-blur">
+    <div className="portfolio-shell min-h-screen bg-[#f8faf9] text-zinc-950 antialiased">
+      <header className="site-header sticky top-0 z-30 border-b border-zinc-200/80 bg-[#f8faf9]/95 backdrop-blur">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
           <a href="#top" className="flex items-center gap-3">
             <span className="grid h-10 w-10 place-items-center rounded-md bg-zinc-950 text-sm font-bold text-white">
@@ -348,64 +348,67 @@ export default function App() {
       </header>
 
       <main id="top">
-        <section className="mx-auto grid max-w-7xl items-center gap-10 px-4 py-14 sm:px-6 lg:min-h-[calc(100vh-121px)] lg:grid-cols-[1.08fr_0.92fr] lg:px-8">
-          <div>
+        <section className="hero-section mx-auto grid max-w-7xl items-center gap-10 px-4 py-12 sm:px-6 lg:min-h-[calc(100vh-88px)] lg:grid-cols-[1.02fr_0.98fr] lg:px-8 lg:py-16">
+          <div className="hero-copy">
             <div className="flex flex-wrap items-center gap-3">
-              <p className="w-fit rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-emerald-800">
+              <p className="w-fit rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.16em] text-emerald-800">
                 Nairobi based developer
               </p>
-              <p className="w-fit rounded-full border border-zinc-200 bg-white px-3 py-1 text-xs font-semibold text-zinc-600">
+              <p className="w-fit rounded-full border border-zinc-200 bg-white/80 px-3 py-1.5 text-xs font-semibold text-zinc-600">
                 Open to junior developer and IT support roles
               </p>
             </div>
 
-            <h1 className="mt-6 max-w-4xl text-4xl font-bold leading-[1.05] tracking-tight text-zinc-950 sm:text-5xl lg:text-6xl">
-              I build fast, useful web experiences and keep the systems behind them running.
+            <p className="mt-8 text-sm font-semibold uppercase tracking-[0.2em] text-emerald-800">Hello, I&apos;m Simon Waweru</p>
+            <h1 className="mt-4 max-w-4xl text-4xl font-bold leading-[1.04] tracking-tight text-zinc-950 sm:text-5xl lg:text-6xl xl:text-7xl">
+              I build digital tools that make work <span className="text-emerald-800">simpler.</span>
             </h1>
 
-            <p className="mt-6 max-w-2xl text-base leading-8 text-zinc-700 sm:text-lg">
-              I am a front-end focused developer with hands-on skill in Firebase apps, copywriting,
-              network troubleshooting, hardware support, and software support.
+            <p className="mt-6 max-w-2xl text-base leading-8 text-zinc-600 sm:text-lg">
+              Front-end developer and IT support specialist creating useful web experiences and helping the systems behind them run smoothly.
             </p>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <a
                 href="#work"
-                className="inline-flex items-center justify-center gap-2 rounded-md bg-emerald-800 px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-emerald-900"
+                className="button-primary inline-flex items-center justify-center gap-2 rounded-md bg-emerald-800 px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-emerald-900"
               >
                 View Projects
                 <ArrowUpRight className="h-4 w-4" />
               </a>
               <a
                 href="#contact"
-                className="inline-flex items-center justify-center gap-2 rounded-md border border-zinc-200 bg-white px-5 py-3 text-sm font-semibold text-zinc-950 shadow-sm transition hover:border-zinc-400"
+                className="button-secondary inline-flex items-center justify-center gap-2 rounded-md border border-zinc-200 bg-white px-5 py-3 text-sm font-semibold text-zinc-950 shadow-sm transition hover:border-zinc-400"
               >
                 Let&apos;s Work Together
               </a>
             </div>
 
-            <div className="mt-8 grid gap-3 border-y border-zinc-200 py-5 sm:grid-cols-3">
+            <div className="mt-10 grid gap-4 border-y border-zinc-200/80 py-6 sm:grid-cols-3">
               <ProofPoint label="Primary stack" value="React + Firebase" />
               <ProofPoint label="Strength" value="Business-ready UI" />
               <ProofPoint label="Support edge" value="Networks, hardware, software" />
             </div>
           </div>
 
-          <aside className="relative">
-            <div className="rounded-2xl border border-zinc-200 bg-white p-3 shadow-xl shadow-zinc-200/80">
-              <div className="mb-3 flex items-center justify-between px-1">
-                <span className="text-xs font-semibold uppercase tracking-[0.18em] text-zinc-500">Profile</span>
-                <span className="rounded-full bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-800">Available</span>
-              </div>
-              <div className="aspect-[4/5] overflow-hidden rounded-xl border border-zinc-200 bg-zinc-200">
-              <img
-                src="/portfolio1.jpeg"
-                alt="Simon Wamugunda Waweru"
-                className="h-full w-full object-cover"
-              />
-              </div>
+          <aside className="hero-visual relative">
+            <div className="portrait-composition">
+              <figure className="portrait-main">
+                <img
+                  src="/portfolio2.jpeg"
+                  alt="Simon Wamugunda Waweru, portrait"
+                  onError={(event) => { event.currentTarget.onerror = null; event.currentTarget.src = '/portfolio.jpeg' }}
+                  fetchPriority="high"
+                />
+                <figcaption><span className="status-dot" /> Nairobi, Kenya · Available for opportunities</figcaption>
+              </figure>
+              <figure className="portrait-secondary">
+                <img src="/portfolio1.jpeg" alt="Simon Wamugunda Waweru" loading="lazy" />
+                <figcaption>Developer &amp; IT support</figcaption>
+              </figure>
+              <div className="portrait-note"><span>People first.</span><span>Built with purpose.</span></div>
             </div>
-            <div className="mt-8 grid grid-cols-3 gap-3 text-center">
+            <div className="mt-6 grid grid-cols-3 gap-3 text-center">
               <Stat value="5+" label="Core projects" />
               <Stat value="4" label="Skill lanes" />
               <Stat value="2026" label="Updated" />

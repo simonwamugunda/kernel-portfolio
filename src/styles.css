@@ -4,10 +4,15 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 6rem;
 }
 
 body {
+  margin: 0;
+  background: #f8faf9;
   text-rendering: geometricPrecision;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 ::selection {
@@ -25,6 +30,219 @@ body {
 
 .portfolio-section:target {
   box-shadow: inset 0 0 0 1px rgba(15, 23, 42, 0.08), 0 18px 55px rgba(15, 23, 42, 0.08);
+}
+
+.site-header {
+  box-shadow: 0 8px 30px rgb(15 23 42 / 3%);
+}
+
+.site-header nav a {
+  border-color: transparent !important;
+  background: transparent !important;
+  color: #52525b !important;
+  box-shadow: none !important;
+}
+
+.site-header nav a:hover,
+.site-header nav a[aria-current='page'] {
+  border-color: #d1fae5 !important;
+  background: #ecfdf5 !important;
+  color: #065f46 !important;
+}
+
+.hero-section {
+  position: relative;
+  isolation: isolate;
+}
+
+.hero-section::before {
+  position: absolute;
+  z-index: -1;
+  top: 3rem;
+  right: 0;
+  width: min(42vw, 34rem);
+  height: min(42vw, 34rem);
+  border-radius: 9999px;
+  background: radial-gradient(circle, rgb(16 185 129 / 9%), rgb(16 185 129 / 0%) 70%);
+  content: '';
+  pointer-events: none;
+}
+
+.hero-copy,
+.hero-visual {
+  animation: rise-in 650ms both;
+}
+
+.hero-visual {
+  animation-delay: 100ms;
+}
+
+.portrait-composition {
+  position: relative;
+  min-height: clamp(24rem, 48vw, 38rem);
+  margin-inline: auto;
+  max-width: 38rem;
+}
+
+.portrait-main {
+  position: absolute;
+  inset: 0 17% 7% 4%;
+  overflow: hidden;
+  border: 8px solid white;
+  border-radius: 1.5rem;
+  background: #e4e4e7;
+  box-shadow: 0 30px 80px rgb(15 23 42 / 15%);
+}
+
+.portrait-main img,
+.portrait-secondary img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.portrait-main img {
+  object-position: center 35%;
+}
+
+.portrait-main figcaption {
+  position: absolute;
+  right: 0.85rem;
+  bottom: 0.85rem;
+  left: 0.85rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: fit-content;
+  max-width: calc(100% - 1.7rem);
+  border: 1px solid rgb(255 255 255 / 60%);
+  border-radius: 9999px;
+  background: rgb(255 255 255 / 94%);
+  padding: 0.65rem 0.9rem;
+  color: #27272a;
+  font-size: 0.72rem;
+  font-weight: 600;
+  box-shadow: 0 5px 18px rgb(15 23 42 / 12%);
+}
+
+.status-dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 0 3px #d1fae5;
+}
+
+.portrait-secondary {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 39%;
+  height: 48%;
+  overflow: hidden;
+  border: 7px solid white;
+  border-radius: 1.25rem;
+  background: #e4e4e7;
+  box-shadow: 0 20px 55px rgb(15 23 42 / 19%);
+  transform: rotate(3deg);
+}
+
+.portrait-secondary img {
+  object-position: center 30%;
+}
+
+.portrait-secondary figcaption {
+  position: absolute;
+  right: 0.5rem;
+  bottom: 0.5rem;
+  left: 0.5rem;
+  border-radius: 0.6rem;
+  background: rgb(255 255 255 / 94%);
+  padding: 0.5rem 0.6rem;
+  color: #27272a;
+  text-align: center;
+  font-size: 0.68rem;
+  font-weight: 700;
+}
+
+.portrait-note {
+  position: absolute;
+  top: 7%;
+  right: 1%;
+  display: grid;
+  gap: 0.2rem;
+  border: 1px solid rgb(16 185 129 / 18%);
+  border-radius: 0.9rem;
+  background: #ecfdf5;
+  padding: 0.8rem 1rem;
+  color: #065f46;
+  font-size: 0.7rem;
+  font-weight: 700;
+  box-shadow: 0 12px 30px rgb(15 23 42 / 7%);
+  transform: rotate(-3deg);
+}
+
+.portrait-note span + span {
+  color: #047857;
+  font-weight: 500;
+}
+
+.button-primary,
+.button-secondary {
+  min-height: 3rem;
+  border-radius: 0.7rem !important;
+}
+
+.portfolio-section {
+  margin-bottom: 1rem;
+  border: 1px solid rgb(228 228 231 / 75%);
+  background: rgb(255 255 255 / 72%);
+  box-shadow: 0 16px 50px rgb(24 24 27 / 3%);
+}
+
+.portfolio-section > div:first-child > div:first-child {
+  height: 0.25rem;
+  width: 2.5rem;
+  background: #059669;
+}
+
+.portfolio-section article {
+  border-radius: 1rem;
+}
+
+.portfolio-section article.group,
+.portfolio-section .group.flex {
+  transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
+}
+
+.portfolio-section article.group:hover,
+.portfolio-section .group.flex:hover {
+  transform: translateY(-4px);
+}
+
+footer {
+  position: relative;
+  overflow: hidden;
+}
+
+footer::before {
+  position: absolute;
+  top: -12rem;
+  right: -7rem;
+  width: 28rem;
+  height: 28rem;
+  border: 1px solid rgb(52 211 153 / 17%);
+  border-radius: 50%;
+  box-shadow: 0 0 0 3rem rgb(52 211 153 / 3%), 0 0 0 6rem rgb(52 211 153 / 2%);
+  content: '';
+  pointer-events: none;
+}
+
+@keyframes rise-in {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 #work:target {
@@ -60,4 +278,47 @@ body {
   margin: 0 auto;
   background: white;
   box-shadow: 0 2px 12px rgb(0 0 0 / 14%);
+}
+
+@media (max-width: 640px) {
+  .portrait-composition {
+    min-height: 24rem;
+    max-width: 27rem;
+  }
+
+  .portrait-main {
+    inset: 0 16% 7% 0;
+    border-width: 6px;
+  }
+
+  .portrait-secondary {
+    width: 40%;
+    height: 45%;
+    border-width: 5px;
+  }
+
+  .portrait-note {
+    top: 5%;
+    right: 0;
+    font-size: 0.62rem;
+  }
+
+  .portrait-main figcaption {
+    right: 0.45rem;
+    bottom: 0.45rem;
+    left: 0.45rem;
+    padding: 0.55rem 0.65rem;
+    font-size: 0.62rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
