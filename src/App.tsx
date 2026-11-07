@@ -199,22 +199,26 @@ const slideDeck = {
 }
 
 const photoEssay = {
-  title: 'The Photo Essay',
+  title: 'Life Around Lake Turkana: Water, Livelihoods and Community Cooperation',
   description:
-    'A documentary photography essay by Patrick Sutherland, published in Visual Anthropology Review (2016). The article discusses the photo essay through the work of Roger Hutchings and other documentary photographers.',
-  href: '/photographic-essay.pdf',
-  photosHref: 'http://www.benmurphy.co.uk/homes-of-the-american-dispossessed#1',
+    'A photo-led presentation following how water scarcity shapes daily life and livelihoods around Lake Turkana, and how communities work together to manage shared resources.',
+  href: 'https://www.international-alert.org/stories/water-is-the-number-one-natural-resource-lake-turkana-photo-essay/',
+  deckHref: '/life-around-lake-turkana-photo-essay.pptx',
+  pdfHref: '/life-around-lake-turkana-photo-essay.pdf',
 }
 
 const mpesaVideo = 'https://drive.google.com/file/d/1NKUe9NwvU23vinEOVkBNfFUGW6h9SPE6/view?usp=sharing'
 const mpesaVideoEmbed = 'https://drive.google.com/file/d/1NKUe9NwvU23vinEOVkBNfFUGW6h9SPE6/preview'
 const africanCultureVideo = 'https://drive.google.com/file/d/1pOwrje8TSC9JMRhatdsMfawtsM-Buuh2/view?usp=drive_link'
 const africanCultureVideoEmbed = 'https://drive.google.com/file/d/1pOwrje8TSC9JMRhatdsMfawtsM-Buuh2/preview'
+const misinformationVideo = 'https://drive.google.com/file/d/1ICTI9_9V4P5hS1KvqYVxYapjG_e0K_P_/view?usp=sharing'
+const misinformationVideoEmbed = 'https://drive.google.com/file/d/1ICTI9_9V4P5hS1KvqYVxYapjG_e0K_P_/preview'
 
 export default function App() {
   const year = useMemo(() => new Date().getFullYear(), [])
   const [activeSection, setActiveSection] = useState('work')
   const [viewingDocument, setViewingDocument] = useState<{ title: string; href: string } | null>(null)
+  const [showPhotoEssayPreview, setShowPhotoEssayPreview] = useState(false)
 
   useEffect(() => {
     const updateFromHash = () => {
@@ -527,6 +531,42 @@ export default function App() {
               </details>
             </div>
           </article>
+          <article className="mb-8 overflow-hidden rounded-xl border border-amber-200 bg-white shadow-sm">
+            <div className="grid gap-6 bg-amber-50 p-6 sm:p-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-amber-800">Video presentation · media literacy and digital rights</p>
+                <h3 className="mt-3 text-2xl font-bold tracking-tight text-zinc-950">Truth Under Pressure: Fighting Online Misinformation in Africa with a Community-Based, Multilingual Solution</h3>
+                <p className="mt-3 max-w-3xl leading-7 text-zinc-700">A community-centered response to online misinformation in Africa, combining local-language media literacy, multilingual fact-checking, and platform accountability that respects rights.</p>
+                <a href={misinformationVideo} target="_blank" rel="noreferrer" className="mt-5 inline-flex w-fit items-center text-sm font-semibold text-amber-900 underline underline-offset-4 hover:text-amber-950">
+                  Open video on Google Drive <ArrowUpRight className="ml-1 inline h-4 w-4" />
+                </a>
+              </div>
+              <div className="aspect-video w-full overflow-hidden rounded-lg bg-zinc-950 shadow-md">
+                <iframe
+                  src={misinformationVideoEmbed}
+                  title="Truth Under Pressure: Fighting Online Misinformation in Africa with a Community-Based, Multilingual Solution"
+                  className="h-full w-full"
+                  allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
+                  allowFullScreen
+                  referrerPolicy="strict-origin-when-cross-origin"
+                />
+              </div>
+            </div>
+            <div className="grid gap-3 p-6 sm:p-8 lg:grid-cols-3">
+              <details className="group rounded-lg border border-zinc-200 p-4" open>
+                <summary className="cursor-pointer font-semibold text-zinc-950">English abstract</summary>
+                <p className="mt-3 leading-7 text-zinc-700">This presentation examines online misinformation as a major challenge facing modern society, using Africa and Kenya as the main case. It distinguishes misinformation, which is false information shared without intent to deceive, from disinformation, which is spread on purpose, and explains why false claims on platforms such as WhatsApp, Facebook and TikTok often travel faster than fact-checks, as Kenya&apos;s 2022 election showed. It reviews the work of African fact-checkers such as Africa Check and PesaCheck, and the legal debate in Kenya after the Court of Appeal declared sections 22 and 23 of the Computer Misuse and Cybercrimes Act unconstitutional in March 2026. The presentation then proposes a three-part solution that an IT professional can help build: media and information literacy delivered in local languages through schools and community radio, a multilingual fact-check tipline on WhatsApp and SMS backed by pre-bunking before major events, and rights-respecting platform accountability instead of criminal penalties that can silence legitimate speech. It concludes that defending truth is a shared responsibility of citizens, technologists, media and government.</p>
+              </details>
+              <details className="group rounded-lg border border-zinc-200 p-4">
+                <summary className="cursor-pointer font-semibold text-zinc-950">Muhtasari wa Kiswahili</summary>
+                <p className="mt-3 leading-7 text-zinc-700">Wasilisho hili linachunguza taarifa potofu mtandaoni kama changamoto kubwa inayoikabili jamii ya kisasa, likitumia Afrika na Kenya kama kielelezo kikuu. Linatofautisha taarifa potofu (misinformation), ambazo ni habari za uongo zinazosambazwa bila nia ya kudanganya, na upotoshaji wa makusudi (disinformation), ambazo husambazwa kwa makusudi, na kueleza kwa nini madai ya uongo kwenye majukwaa kama WhatsApp, Facebook na TikTok mara nyingi husafiri kwa kasi kuliko uthibitishaji wa ukweli, kama ilivyoonekana katika uchaguzi wa Kenya wa mwaka 2022. Linapitia kazi ya wathibitishaji wa ukweli wa Kiafrika kama Africa Check na PesaCheck, na mjadala wa kisheria nchini Kenya baada ya Mahakama ya Rufaa kutamka mwezi Machi 2026 kwamba vifungu vya 22 na 23 vya Sheria ya Matumizi Mabaya ya Kompyuta na Makosa ya Mtandao si vya kikatiba. Kisha wasilisho linapendekeza suluhisho la sehemu tatu ambalo mtaalamu wa TEHAMA anaweza kusaidia kujenga: elimu ya habari na vyombo vya habari kwa lugha za kienyeji kupitia shule na redio za jamii, huduma ya kuthibitisha taarifa kwa lugha nyingi kupitia WhatsApp na SMS pamoja na kuwaandaa watu mapema kabla ya matukio makubwa, na uwajibikaji wa majukwaa unaoheshimu haki badala ya adhabu za jinai zinazoweza kunyamazisha hotuba halali. Hitimisho ni kwamba kulinda ukweli ni wajibu wa pamoja wa wananchi, wataalamu wa teknolojia, vyombo vya habari na serikali.</p>
+              </details>
+              <details className="group rounded-lg border border-zinc-200 p-4">
+                <summary className="cursor-pointer font-semibold text-zinc-950">Kikuyu abstract (Gĩkũyũ)</summary>
+                <p className="mt-3 leading-7 text-zinc-700">Ũhoro ũyũ ũkwaria ũhoro wa maheeni ma intaneti thĩinĩ wa Afrika na Kenya, na ũrĩa ũngĩtigithio. Nĩ ũtaarĩria atĩ ũhoro wa maheeni ũgwatĩrĩra narua gũkĩra kũgeretio, ta ũrĩa kwarĩ hĩndĩ ya thaguo cia 2022 bũrũri-inĩ wa Kenya. Nĩ twonania wĩra wa arĩa megeragia ũhoro, ta Africa Check na PesaCheck, na ũhoro wa mawatho ma Kenya thutha wa Kĩrĩndĩ kĩa Ihenya kuuga mweri wa Gatatũ 2026 atĩ ciama 22 na 23 cia watho wa kũhũthĩra kompyuta na mahĩtia ma intaneti ti cia Katiba. Ũhoro ũyũ nĩ ũrathiĩ na mbere kũheana njĩra ithatũ: (1) kũruta andũ kũmenya ũhoro wa ma na wa maheeni na ndeto cia kĩrĩra, na rĩdio cia kĩrĩra na ciana cia ciuria, (2) wĩra wa kũgeria ũhoro na WhatsApp na SMS thĩinĩ wa ndeto nyingĩ, na (3) kũgĩa na mawatho marĩa mahithagĩria ũgitĩri wa kwaria. Mũthia wa ũhoro ũyũ nĩ atĩ kũgitĩra ũhoro wa ma nĩ wĩra wa andũ othe.</p>
+              </details>
+            </div>
+          </article>
           <div className="grid gap-4 md:grid-cols-3">
             {resumes.map((resume) => (
               <article
@@ -586,24 +626,34 @@ export default function App() {
             </div>
           </div>
 
-          <div className="mt-4 rounded-xl border border-amber-200 bg-amber-50 p-6 shadow-sm sm:flex sm:items-center sm:justify-between sm:gap-6">
-            <div>
-              <div className="grid h-11 w-11 place-items-center rounded-lg border border-amber-200 bg-white text-amber-800">
-                <FileText className="h-5 w-5" />
+          <div className="mt-4 rounded-xl border border-amber-200 bg-amber-50 p-6 shadow-sm">
+            <div className="lg:flex lg:items-center lg:justify-between lg:gap-6">
+              <div>
+                <div className="grid h-11 w-11 place-items-center rounded-lg border border-amber-200 bg-white text-amber-800">
+                  <FileText className="h-5 w-5" />
+                </div>
+                <h3 className="mt-4 text-lg font-bold text-zinc-950">{photoEssay.title}</h3>
+                <p className="mt-2 max-w-2xl leading-7 text-zinc-700">{photoEssay.description}</p>
               </div>
-              <h3 className="mt-4 text-lg font-bold text-zinc-950">{photoEssay.title}</h3>
-              <p className="mt-2 max-w-2xl leading-7 text-zinc-700">{photoEssay.description}</p>
-              <a href={photoEssay.photosHref} target="_blank" rel="noreferrer" className="mt-3 inline-flex items-center gap-1 text-sm font-semibold text-amber-900 underline underline-offset-4 hover:text-amber-950">
-                View the photographs referenced in the essay <ArrowUpRight className="h-4 w-4" />
-              </a>
+              <div className="mt-5 flex shrink-0 flex-wrap gap-3 lg:mt-0">
+                <button type="button" onClick={() => setShowPhotoEssayPreview((visible) => !visible)} aria-expanded={showPhotoEssayPreview} aria-controls="photo-essay-preview" className="inline-flex items-center justify-center gap-2 rounded-md bg-amber-800 px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-amber-900">
+                  {showPhotoEssayPreview ? 'Hide slides' : 'View slides'} <Eye className="h-4 w-4" />
+                </button>
+                <a href={photoEssay.deckHref} download className="inline-flex items-center justify-center gap-2 rounded-md border border-amber-300 bg-white px-5 py-3 text-sm font-semibold text-amber-950 transition hover:bg-amber-100">
+                  Download PowerPoint <Download className="h-4 w-4" />
+                </a>
+                <a href={photoEssay.pdfHref} download className="inline-flex items-center justify-center gap-2 rounded-md border border-amber-300 bg-white px-5 py-3 text-sm font-semibold text-amber-950 transition hover:bg-amber-100">
+                  Download PDF <Download className="h-4 w-4" />
+                </a>
+                <a href={photoEssay.href} target="_blank" rel="noreferrer" className="inline-flex items-center justify-center gap-2 rounded-md border border-zinc-300 bg-white px-5 py-3 text-sm font-semibold text-zinc-800 transition hover:bg-zinc-50">
+                  View source photo essay <ArrowUpRight className="h-4 w-4" />
+                </a>
+              </div>
             </div>
-            <div className="mt-5 flex shrink-0 flex-wrap gap-3 sm:mt-0">
-              <a href={photoEssay.href} target="_blank" rel="noreferrer" className="inline-flex items-center justify-center gap-2 rounded-md bg-amber-800 px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-amber-900">
-                View essay <Eye className="h-4 w-4" />
-              </a>
-              <a href={photoEssay.href} download className="inline-flex items-center justify-center gap-2 rounded-md border border-amber-300 px-5 py-3 text-sm font-semibold text-amber-950 transition hover:bg-amber-100">
-                Download <Download className="h-4 w-4" />
-              </a>
+            <div id="photo-essay-preview" hidden={!showPhotoEssayPreview} className="mt-6 overflow-hidden rounded-xl border border-zinc-300 bg-zinc-950 shadow-lg">
+              {showPhotoEssayPreview && (
+                <iframe src={`${photoEssay.pdfHref}#view=FitH`} title="Preview of the Lake Turkana photo essay slides" className="h-[70vh] min-h-[30rem] w-full" />
+              )}
             </div>
           </div>
         </Section>
